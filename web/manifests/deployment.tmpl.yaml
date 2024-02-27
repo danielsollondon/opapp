@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: todo-web
+  template:
+    metadata:
+      labels:
+        app: todo-web
+        azure.workload.identity/use: "true"
+    spec:
+      serviceAccountName: workload-identity-sa-05
+      containers:
+        - name: todo-web
+          image: "crzyxniw5wrlq4u.azurecr.io/todo-nodejs-mongo-aks/web-aksmon05:azd-deploy-1708530523"
+          ports:
+            - containerPort: 3000

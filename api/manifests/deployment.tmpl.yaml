@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: todo-api
+  template:
+    metadata:
+      labels:
+        app: todo-api
+        azure.workload.identity/use: "true"
+    spec:
+      serviceAccountName: workload-identity-sa-05
+      containers:
+        - name: todo-api
+          image: "crzyxniw5wrlq4u.azurecr.io/todo-nodejs-mongo-aks/api-aksmon05:azd-deploy-1708530522"
+          ports:
+            - containerPort: 3100
+          env:
+            - name: AZURE_KEY_VAULT_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-api-config
+                  key: AZURE_KEY_VAULT_ENDPOINT
+                  optional: false
+
