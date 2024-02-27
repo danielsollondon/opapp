@@ -19,3 +19,12 @@ spec:
           image: "crzyxniw5wrlq4u.azurecr.io/todo-nodejs-mongo-aks/web-aksmon05:azd-deploy-1708530523"
           ports:
             - containerPort: 3000
+          env:
+            - name: REACT_APP_API_BASE_URL
+              value: /api
+            - name: REACT_APP_APPLICATIONINSIGHTS_CONNECTION_STRING
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-web-config
+                  key: REACT_APP_APPLICATIONINSIGHTS_CONNECTION_STRING
+                  optional: false

@@ -26,4 +26,9 @@ spec:
                   name: todo-api-config
                   key: AZURE_KEY_VAULT_ENDPOINT
                   optional: false
-
+            - name: APPLICATIONINSIGHTS_CONNECTION_STRING
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-api-config
+                  key: APPLICATIONINSIGHTS_CONNECTION_STRING
+                  optional: false
